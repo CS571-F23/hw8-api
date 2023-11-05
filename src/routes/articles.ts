@@ -13,12 +13,12 @@ export class CS571ArticlesRoute implements CS571Route {
 
     public constructor(articles: BadgerArticle[]) {
         this.articles = articles;
-        this.articleSummaries = [];
+        this.articleSummaries = articles.map(art => new BadgerArticleSummary(art));
     }
 
     public addRoute(app: Express): void {
         app.get(CS571ArticlesRoute.ROUTE_NAME, (req, res) => {
-            res.status(200).set('Cache-control', 'private, max-age=60').send(this.articleSummaries);
+            res.status(200).set('Cache-control', 'public, max-age=60').send(this.articleSummaries);
         })
     }
 

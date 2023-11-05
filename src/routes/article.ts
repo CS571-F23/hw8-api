@@ -12,12 +12,24 @@ export class CS571ArticleRoute implements CS571Route {
 
     public constructor(articles: BadgerArticle[]) {
         this.articles = articles;
+        this.presentableArticles = this.articles.reduce((acc: any, art: BadgerArticle) => {
+            return {
+                ...acc,
+                [art.id]: art
+            }
+        }, {})
     }
 
     public addRoute(app: Express): void {
         app.get(CS571ArticleRoute.ROUTE_NAME, (req, res) => {
-            // TODO Get article by query num
-            res.status(200).set('Cache-control', 'private, max-age=60').send(undefined);
+            const reqId = String(req.query.id);
+            if (reqId && Object.keys(this.presentableArticles).includes(reqId)) {
+                res.status(200).send(this.presentableArticles[reqId]);
+            } else {
+                res.status(404).send({
+                    msg: `Article not found.`
+                })
+            }
         })
     }
 

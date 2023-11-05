@@ -18,10 +18,13 @@ const appBundle = CS571Initializer.init(app, {
 
 const parsedArticles = JSON.parse(fs.readFileSync("includes/_articles.json").toString())
 const articles = parsedArticles.map((article: any) => new BadgerArticle(
-  article.name,
-  article.price,
-  article.upperLimit,
-  article.imgSrc
+  article.img,
+  article.title,
+  article.body,
+  article.author,
+  article.posted,
+  article.url,
+  article.tags
 ));
 
 
