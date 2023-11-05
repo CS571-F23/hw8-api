@@ -24,7 +24,9 @@ export class CS571ArticleRoute implements CS571Route {
         app.get(CS571ArticleRoute.ROUTE_NAME, (req, res) => {
             const reqId = String(req.query.id);
             if (reqId && Object.keys(this.presentableArticles).includes(reqId)) {
-                res.status(200).send(this.presentableArticles[reqId]);
+                setTimeout(() => {
+                    res.status(200).send(this.presentableArticles[reqId])
+                }, 2000);
             } else {
                 res.status(404).send({
                     msg: `Article not found.`
